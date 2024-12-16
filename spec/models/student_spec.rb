@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Student, type: :model do
   describe '.section_overflow' do
     let!(:student) { create(:student) }
-    let!(:start_time_global) { Time.now }
+    let!(:start_time_global) { Time.now.utc.round.beginning_of_day + 14.hours }
 
     context 'when all sections are at the same day' do
       context 'when new timeframe start_time and end_time are inside of existing timeframe' do

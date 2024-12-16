@@ -7,8 +7,17 @@ class Student < ApplicationRecord
   has_many :classrooms, through: :subjects
 
   def schedule
+    sections
   end
 
+  # [note]
+  #
+  # Overflow of existing section still coud appear
+  # if admin will change duration, or start_time of section, or weekly_periodity
+  #
+  # Restrict admin to change it, is not the best idea,
+  # because the big amount of students in UNI could petrificate any changes
+  #
   def section_overflow(section_new)
     start_time_new = section_new.start_time.strftime("%H:%M")
     end_time_new   = section_new.end_time.strftime("%H:%M")
