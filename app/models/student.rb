@@ -13,10 +13,15 @@ class Student < ApplicationRecord
     start_time_new = section_new.start_time.strftime("%H:%M")
     end_time_new   = section_new.end_time.strftime("%H:%M")
 
-    intersections = sections.where("start_time::time < ? AND end_time::time > ?", start_time_new, start_time_new)
-                               .or(sections.where("start_time::time < ? AND end_time::time > ?", end_time_new, end_time_new))
-                               .or(sections.where("start_time::time > ? AND end_time::time < ?", start_time_new, end_time_new))
+    allow_insertion = true
+    section_new.weekly_periodity_humanize.each do |day|
+      intersections = sections.where("start_time::time < ? AND end_time::time > ?", start_time_new, start_time_new)
+                              .or(sections.where("start_time::time < ? AND end_time::time > ?", end_time_new, end_time_new))
+                              .or(sections.where("start_time::time > ? AND end_time::time < ?", start_time_new, end_time_new)).by_day(day)
 
-    intersections.count.zero?
+      allow_insertion = allow_insertion && intersections.count.zero?
+    end
+
+    allow_insertion
   end
 end
