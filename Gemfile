@@ -52,3 +52,5 @@ end
 
 
 gem "rspec-rails", "~> 7.1"
+
+gem "factory_bot_rails", "~> 6.4"
