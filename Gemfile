@@ -54,3 +54,7 @@ end
 gem "rspec-rails", "~> 7.1"
 
 gem "factory_bot_rails", "~> 6.4"
+
+gem "rubocop", "~> 1.69"
+
+gem "database_cleaner-active_record", "~> 2.2"
