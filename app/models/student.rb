@@ -6,6 +6,11 @@ class Student < ApplicationRecord
   has_many :subjects, through: :subjects
   has_many :classrooms, through: :subjects
 
+  # [note]
+  #
+  # querying should be in eager load
+  # to prevent n+1
+  #
   def schedule
     sections
   end
