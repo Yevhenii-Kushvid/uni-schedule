@@ -5,6 +5,8 @@ class Section < ApplicationRecord
 
   has_many :students
 
+  scope :by_day, ->(day) { where("(weekly_periodity & ?) != 0", weekly_bitemask[day]) }
+
   before_save :preload_data
 
   def preload_data
@@ -14,12 +16,10 @@ class Section < ApplicationRecord
   end
 
   def weekly_periodity_humanize
-    weekly_bitemask.filter { |day, mask| !(weekly_periodity & mask).zero? }.keys
+    self.class.weekly_bitemask.filter { |day, mask| !(weekly_periodity & mask).zero? }.keys
   end
 
-  private
-
-  def weekly_bitemask
+  def self.weekly_bitemask
     {
       sunday:       0b0000001,
       monday:       0b0000010,

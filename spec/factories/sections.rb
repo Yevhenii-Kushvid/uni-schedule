@@ -6,7 +6,7 @@ FactoryBot.define do
 
     duration { 5 }
     start_time { Time.now.round.utc.to_datetime }
-    end_time { (start_time + 10.minutes * duration).round.utc.to_datetime }
+    end_time { (start_time + 10.minutes * duration).to_datetime }
 
     weekly_periodity { rand(65) } # mask
   end

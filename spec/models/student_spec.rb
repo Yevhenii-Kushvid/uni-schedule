@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Student, type: :model do
-  describe 'schedule overflow' do
+  describe '.section_overflow' do
     context 'when student wants to add a new section to his schedule' do
       let!(:student) { create(:student) }
       let!(:start_time_global) { Time.now }
