@@ -8,4 +8,15 @@ class Student < ApplicationRecord
 
   def schedule
   end
+
+  def section_overflow(section_new)
+    start_time_new = section_new.start_time.strftime("%H:%M")
+    end_time_new   = section_new.end_time.strftime("%H:%M")
+
+    intersections = sections.where("start_time::time < ? AND end_time::time > ?", start_time_new, start_time_new)
+                               .or(sections.where("start_time::time < ? AND end_time::time > ?", end_time_new, end_time_new))
+                               .or(sections.where("start_time::time > ? AND end_time::time < ?", start_time_new, end_time_new))
+
+    intersections.count.zero?
+  end
 end
