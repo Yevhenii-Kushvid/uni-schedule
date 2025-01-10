@@ -6,6 +6,15 @@ class Section < ApplicationRecord
   has_many :students
 
   scope :by_day, ->(day) { where("(weekly_periodity & ?) != 0", weekly_bitemask[day]) }
+  scope :conflicts, ->(section_new) do
+    start_time_new = section_new.start_time.strftime("%H:%M")
+    end_time_new   = section_new.end_time.strftime("%H:%M")
+
+    query = where("(weekly_periodity & ?) != 0", section_new.weekly_periodity)
+    query.where("start_time::time < ? AND end_time::time > ?", start_time_new, start_time_new)
+                         .or(query.where("start_time::time < ? AND end_time::time > ?", end_time_new, end_time_new))
+                         .or(query.where("start_time::time > ? AND end_time::time < ?", start_time_new, end_time_new))
+  end
 
   before_save :preload_data
   before_save :set_duration
