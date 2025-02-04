@@ -48,7 +48,7 @@ group :development, :test do
 
   gem "factory_bot_rails", "~> 6.4"
 
-  gem "rubocop", "~> 1.69"
+  gem "rubocop", "~> 1.71"
 
   gem "database_cleaner-active_record", "~> 2.2"
 
